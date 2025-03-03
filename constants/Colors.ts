@@ -31,19 +31,38 @@ export const Color = {
   light: {
     ...DefaultTheme.colors,
     primary: "white",
-    secondary: "#FFBA4E",
-    textFieldPrimary: "#DFDBDB",
+    secondary: "#FFBD59",
+    textFieldPrimary: "#E0DCDC",
     buttonPrimary: '#B02B34',
     buttonTextPrimary: '#ffffff',
     textPrimary: '#150000',
+    textSecondary: '150000',
+    outline: '#150000',
+    onSurfaceVariant: "gray",
+    gray: "#E0DCDC",
+    border: "#150000",
+    lightGray: "#FAF7F7",
   },
   dark: {
     ...DefaultTheme.colors,
     primary: "#150000",
-    secondary: "#FFBA4E",
+    secondary: "#FFBD59",
     textFieldPrimary: "#2C1F20",
     buttonPrimary: '#B02B34',
     buttonTextPrimary: '#ffffff',
-    textPrimary: 'white'
+    textPrimary: '#ffffff',
+    textSecondary: '#120000',
+    onSurfaceVariant: "white",
+    gray: "#E0DCDC",
+    border: "#E0DCDC",
+    lightGray: "#FAF7F7",
   }
 };
+
+export const ConstantColors = {
+  gray: "#E0DCDC",
+  lightGray: "#FAF7F7",
+  cardColor: "#F5CBCC",
+  textSecondary: '#120000',
+
+}

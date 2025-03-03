@@ -1,1 +1,1 @@
-export * from './root-layout-inner/root-layout-inner'
+export {default as RootLayoutInner} from './root-layout-inner/root-layout-inner'

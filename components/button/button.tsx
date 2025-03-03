@@ -1,24 +1,27 @@
 import { ComponentProps, ReactNode } from "react";
 import { StyleSheet } from "react-native";
-import {
-  Button,
-  MenufyTheme,
-  Text,
-  useTheme,
-} from "react-native-paper";
+import { Button, MenufyTheme, Text, useTheme } from "react-native-paper";
 
 export interface ButtonProps extends ComponentProps<typeof Button> {
   children: ReactNode;
-  variant?: "primary" | "outline";
-  onPress: () => void,
+  variant?: "primary" | "outline" | "outline-light";
+  onPress: () => void;
+  customStyle?: any;
 }
 
-function MainButton({ children, variant = 'primary', onPress, ...props }: ButtonProps) {
+function UiButton({
+  children,
+  variant = "primary",
+  customStyle,
+  onPress,
+  ...props
+}: ButtonProps) {
   const { colors } = useTheme<MenufyTheme>();
 
   const primaryStyle = StyleSheet.create({
     main: {
       backgroundColor: colors.buttonPrimary,
+      paddingVertical: 2,
     },
     text: {
       color: colors.buttonTextPrimary,
@@ -28,21 +31,42 @@ function MainButton({ children, variant = 'primary', onPress, ...props }: Button
   const outlineStyle = StyleSheet.create({
     main: {
       borderWidth: 1,
-      borderColor: 'white',
+      borderColor: colors.textPrimary,
+      paddingVertical: 2,
     },
     text: {
-      color: colors.buttonTextPrimary,
+      color: colors.textPrimary,
     },
   });
 
+  const outlineLightStyle = StyleSheet.create({
+    main: {
+      borderWidth: 1,
+      borderColor: 'white',
+      paddingVertical: 2,
+    },
+    text: {
+      color: "white",
+    },
+  });
 
-  const style = variant === 'primary' ? primaryStyle : outlineStyle
+  const style =
+    variant === "primary"
+      ? primaryStyle
+      : variant === "outline"
+      ? outlineStyle
+      : outlineLightStyle;
 
   return (
-    <Button onPress={onPress} style={{...style.main, padding: 4}} {...props}>
+    <Button
+      onPress={onPress}
+      textColor={style.text.color}
+      style={StyleSheet.flatten([style.main, customStyle])}
+      {...props}
+    >
       <Text style={style.text}>{children}</Text>
     </Button>
   );
 }
 
-export default MainButton;
+export default UiButton;

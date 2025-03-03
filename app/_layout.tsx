@@ -2,7 +2,7 @@ import "react-native-reanimated";
 import ThemeProvider, {
   AppStateContextProvider,
 } from "@/providers";
-import RootLayoutInner from "@/layouts/root-layout-inner/root-layout-inner";
+import { RootLayoutInner } from "@/layouts";
 
 export const unstable_settings = {
   initialRouteName: '(onboarding)/index',

@@ -1,19 +1,36 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { useNavigationContainerRef } from "expo-router";
-import { useState } from "react";
-import { AppStateContextProvider } from "../app-state/app-state-provider";
+import { NavigationOption } from "@/types";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
+
+interface NavigationContextProps {
+  activeOption: NavigationOption | null;
+  setActiveOption: Dispatch<SetStateAction<NavigationOption | null>> | null;
+}
+
+const NavigationContext = createContext<NavigationContextProps>({
+  activeOption: null,
+  setActiveOption: null,
+});
 
 export function NavigationProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const navigationRef = useNavigationContainerRef();
-  const [isReady, setIsReady] = useState(false);
+  const [activeOption, setActiveOption] = useState<NavigationOption | null>(
+    null
+  );
 
   return (
-    <NavigationContainer ref={navigationRef} onReady={() => setIsReady(true)}>
-      {isReady && children}
-    </NavigationContainer>
+    <NavigationContext.Provider value={{ activeOption, setActiveOption }}>
+      {children}
+    </NavigationContext.Provider>
   );
 }
+
+export const useNavigationContext = () => useContext(NavigationContext);

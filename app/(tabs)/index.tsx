@@ -1,67 +1,74 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import MainButton from '@/components/button/button';
-import { Text } from 'react-native-paper';
-import MainInput from '@/components/input/input';
+import { StyleSheet, Image, useColorScheme, FlatList } from "react-native";
+import {
+  UiActionCard,
+  UiPlaceholder,
+  UiScreenWrap,
+  UiText,
+  UiView,
+} from "@/components";
+import CalenderLight from "../../assets/images/calender-light.png";
+import CalenderDark from "../../assets/images/calender-dark.png";
+import { dashboardSummaryData } from "@/utils/dummies";
+import { SummaryCard } from "@/features/dashboard";
+import { getAction } from "@/constants/action-options";
+import { getPlaceholder } from "@/constants/placholders";
+import { useState } from "react";
 
 export default function HomeScreen() {
+  const colorScheme = useColorScheme();
+  const [noNetwork, setNoNetwork] = useState(true);
+
+  const toogleNoNetwork = () => setNoNetwork(!noNetwork);
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-        <MainInput placeholder='test' />
-      </ThemedView>
-    </ParallaxScrollView>
+    <UiScreenWrap type="home" customStyle={{ gap: 10 }}>
+      {noNetwork ? (
+        <UiPlaceholder height={'90%'} onPress={toogleNoNetwork} {...getPlaceholder("no-network")!} />
+      ) : (
+        <>
+          <UiView
+            customStyle={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "flex-end",
+              gap: 5,
+            }}
+          >
+            <Image
+              style={{ width: 20, height: 20, objectFit: "contain" }}
+              source={colorScheme === "dark" ? CalenderDark : CalenderLight}
+            />
+            <UiText>{new Date().toDateString()}</UiText>
+          </UiView>
+
+          <UiView customStyle={{ gap: 10, marginTop: "5%" }}>
+            <UiText variant="headlineLarge">Summary</UiText>
+            <FlatList
+              data={dashboardSummaryData}
+              numColumns={4} // Set the number of columns
+              keyExtractor={(_, index) => index.toString()}
+              renderItem={({ item }) => <SummaryCard {...item} />}
+              columnWrapperStyle={styles.cardContaner}
+            />
+
+            <FlatList
+              data={[getAction("new restaurant"), getAction("analytics")]}
+              numColumns={4} // Set the number of columns
+              keyExtractor={(_, index) => index.toString()}
+              renderItem={({ item }) => <UiActionCard onPress={toogleNoNetwork} {...item!} />}
+              columnWrapperStyle={styles.actionContaner}
+            />
+          </UiView>
+        </>
+      )}
+    </UiScreenWrap>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  dateContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
   },
   stepContainer: {
@@ -73,6 +80,18 @@ const styles = StyleSheet.create({
     width: 290,
     bottom: 0,
     left: 0,
-    position: 'absolute',
+    position: "absolute",
+  },
+  cardContaner: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  actionContaner: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    gap: "5%",
+    marginTop: "10%",
   },
 });

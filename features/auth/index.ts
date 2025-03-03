@@ -1,0 +1,6 @@
+export {default as LoginForm} from './components/login-form'
+export {default as RegisterForm} from './components/register-form'
+export {default as ForgotPasswordForm} from './components/forgot-password-form'
+export {default as VerifyOtpForm} from './components/verify-otp-form'
+export {default as SetPasswordForm} from './components/set-password-form'
+export {default as OAuthMethods} from './components/oauth-methods'
