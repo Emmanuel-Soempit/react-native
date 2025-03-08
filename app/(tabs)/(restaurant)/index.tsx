@@ -22,7 +22,9 @@ function Restaurant() {
       <UiSearchBar
         placeholder="find restaurant"
         list={[]}
-        onSearch={(result) => {toogleNoRestaurants()}}
+        onSearch={(result) => {
+          // toogleNoRestaurants()
+        }}
       />
 
       <UiView>
@@ -30,17 +32,24 @@ function Restaurant() {
           data={[getAction("new restaurant"), getAction("analytics")]}
           numColumns={4} // Set the number of columns
           keyExtractor={(_, index) => index.toString()}
-          renderItem={({ item }) => (
-            <UiActionCard onPress={toogleNoRestaurants} {...item!} />
-          )}
+          renderItem={({ item }) => {
+            return (
+              <UiActionCard
+                onPress={
+                  item?.type === "analytics" ? toogleNoRestaurants : () => {}
+                }
+                {...item!}
+              />
+            );
+          }}
           columnWrapperStyle={styles.actionContaner}
         />
       </UiView>
 
       {noRestaurants ? (
         <UiPlaceholder
-          onPress={toogleNoRestaurants}
-          height={'50%'}
+          // onPress={toogleNoRestaurants}
+          height={"50%"}
           {...getPlaceholder("add-restaurant")!}
         />
       ) : (

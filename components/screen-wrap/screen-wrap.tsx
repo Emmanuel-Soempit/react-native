@@ -35,7 +35,7 @@ function UiScreenWrap({
         navigationOptions.find((current) => current.type === type) || null;
       setActiveOption!(option);
     }
-  }, [setActiveOption]);
+  }, []);
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.primary, flex: 1 }}>

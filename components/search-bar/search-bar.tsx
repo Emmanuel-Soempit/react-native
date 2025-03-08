@@ -26,7 +26,7 @@ function UiSearchBar({ list, onSearch, placeholder }: UiSearchBarProps) {
 
   useEffect(() => {
       _handleSearch();
-  }, [searchText, _handleSearch])
+  }, [])
 
   return (
     <UiView

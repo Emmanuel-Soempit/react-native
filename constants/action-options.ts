@@ -15,7 +15,6 @@ export const actions: ActionCardOption[] = [
         type: 'analytics',
         title: 'Analytics',
         image: Analytics,
-        route: '/(tabs)/restaurant'
     },
     {
         type: 'new menu',

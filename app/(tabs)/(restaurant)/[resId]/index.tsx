@@ -94,7 +94,7 @@ import {
           }}
         >
           <UiSearchBar
-            placeholder="find restaurant"
+            placeholder="Find menu"
             list={[]}
             onSearch={(result) => {
               toogleNoRestaurants();

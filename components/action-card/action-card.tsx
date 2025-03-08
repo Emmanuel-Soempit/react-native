@@ -15,9 +15,9 @@ function UiActionCard({ type, image, title, route, onPress }: UiActionProps) {
   const _handleOnPress = () => {
     if (onPress) {
       onPress();
-      if(route){
-        router.push(route)
-      }
+    }
+    if (route) {
+      router.push(route);
     }
   };
 
